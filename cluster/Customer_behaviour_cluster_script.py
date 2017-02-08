@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
-#chaniging directory to current 
+#chaniging directory to current
 import os
-retval = os.getcwd()
-path = '/Users/bsourav/Sysco/Data'
-os.chdir( path )
-retval = os.getcwd()
+path = "/Users/abhishek/Projects/retail-analytics/data"
+os.chdir(path)
 
-import pandas as pd 
-import numpy as np 
+import pandas as pd
+import numpy as np
 
 Cust_behavior = pd.read_csv("customer_segmentation_v3.csv", sep = ',', index_col = 0)
 Cust_behavior.shape
@@ -20,9 +18,11 @@ all_cat_vars =  ['AGE_DESC','MARITAL_STATUS_CODE','INCOME_DESC','HOMEOWNER_DESC'
 All_frequencies = pd.DataFrame(Cust_behavior[all_cat_vars].apply(lambda x: x.value_counts()).T.stack())
 All_frequencies.to_csv
 
-#########*********Treating categorical variable.Converting to numeric to make them usable 
+#########*********Treating categorical variable.Converting to numeric to make them usable
 
 #### Creating a new income variable for each customer which is equal to the mean of the income bucket the customer falls in 
+
+
 def income_conversion (income) :
     if income == "Under 15K" :
         return 7500
@@ -48,7 +48,8 @@ def income_conversion (income) :
         return 224500
     if income == "250K+" :
         return 250000
-        return 62000 ### if income is not in any of these categories, replacing with most frequent category
+    return 62000  ### if income is not in any of these categories, replacing with most frequent category
+
 
 def household_size_conversion(hh_size):
     if hh_size == "1" :
@@ -61,7 +62,7 @@ def household_size_conversion(hh_size):
         return 4
     if hh_size == "5+" :
         return 5
-    return 2 ### if null return the category with max frequency 
+    return 2 ### if null return the category with max frequency
 
 def age_conversion(age):
     if age == "19-24":
@@ -82,8 +83,8 @@ def age_conversion(age):
 Cust_behavior['income_num'] = Cust_behavior['INCOME_DESC'].apply(income_conversion)
 Cust_behavior['hh_size_num'] = Cust_behavior['HOUSEHOLD_SIZE_DESC'].apply(household_size_conversion)
 Cust_behavior['age_num'] = Cust_behavior['AGE_DESC'].apply(age_conversion)
-    
-    
+
+
 
 
 
@@ -159,7 +160,7 @@ for k in range(2, 11):
 ### Number of clusters 
 k = 6
 kmeans = cluster.KMeans(n_clusters=k)
-kmeans.fit(df_cluster_scaled) ##3 fitting cluster 
+kmeans.fit(df_cluster_scaled) ##3 fitting cluster
 
 ####### *********** Scoring and analyzing cluster ********************
 
@@ -169,7 +170,7 @@ kmeans.fit(df_cluster_scaled) ##3 fitting cluster
 Cust_behavior['labels'] = kmeans.predict(df_cluster_scaled)
 
 
-#### Analyzing output .Seeing cluster profile by looking at average of important variables in each cluster 
+#### Analyzing output .Seeing cluster profile by looking at average of important variables in each cluster
 ### This will provide us an idea of how each cluster is different 
 
 Aggregations = {'National Product Count %' : 'mean',
@@ -187,4 +188,4 @@ analyze_output.to_csv('analyze.csv')
 #analyze_output
 
 
-#### Explore how to make the output more readable in html .. 
+#### Explore how to make the output more readable in html ..

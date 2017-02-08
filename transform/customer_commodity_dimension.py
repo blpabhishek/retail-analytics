@@ -1,11 +1,10 @@
+# -*- coding: utf-8 -*-
+# changing directory to current
 import os
 
-import pandas as pd
-
-retval = os.getcwd()
 path = os.environ['data_path']
 os.chdir(path)
-retval = os.getcwd()
+import pandas as pd
 
 productFrame = pd.read_csv('product.csv')
 customerFrame = pd.read_csv('hh_demographic.csv')
@@ -36,8 +35,22 @@ commodity_purchase_behaviour['QUANTITY', 'BABY FOODS'] = commodity_purchase_beha
                                                          commodity_purchase_behaviour['QUANTITY', 'BABYFOOD']
 commodity_purchase_behaviour['SALES_VALUE', 'BABY FOODS'] = commodity_purchase_behaviour['SALES_VALUE', 'BABY FOODS'] + \
                                                             commodity_purchase_behaviour['SALES_VALUE', 'BABYFOOD']
-commodity_purchase_behaviour.head(10)
+tdf1 = transactionFrame[['household_key', 'PRODUCT_ID', 'SALES_VALUE']]
+pdf = productFrame[['PRODUCT_ID', 'COMMODITY_DESC']]
+pdf.columns = ['PRODUCT_ID', 'COMMODITY']
 
-df_cluster = commodity_purchase_behaviour['SALES_VALUE']
-percentileList = [.01, .02, .03, .05, .10, .20, .25, .30, .40, .50, .60, .70, .75, .80, .90, .95, .97, .98, .99]
-df_cluster.describe(percentiles=percentileList).transpose().to_csv('out2.csv')
+commodity_purchase_behaviour = pd.merge(tdf1, pdf, on='PRODUCT_ID', how='left')[
+    ['household_key', 'COMMODITY', 'SALES_VALUE']].groupby(['household_key', 'COMMODITY']).agg(
+    {"SALES_VALUE": 'sum'}).unstack()
+commodity_purchase_behaviour = commodity_purchase_behaviour.reset_index().fillna(0)
+commodity_purchase_behaviour = commodity_purchase_behaviour.set_index('household_key')
+commodity_purchase_behaviour = commodity_purchase_behaviour['SALES_VALUE']
+commodity_purchase_behaviour['BABY FOODS'] = commodity_purchase_behaviour['BABY FOODS'] + commodity_purchase_behaviour[
+    'BABYFOOD']
+commodity_purchase_behaviour.rename(columns={'(CORP USE ONLY)': 'CORP USE ONLY'}, inplace=True)
+commodity_purchase_behaviour.rename(columns=lambda x: "Commodity_" + x, inplace=True)
+commodity_purchase_behaviour.reset_index(inplace=True)
+
+print commodity_purchase_behaviour.head()
+# percentileList = [.01, .02, .03, .05, .10, .20, .25, .30, .40, .50, .60, .70, .75, .80, .90, .95, .97, .98, .99]
+# df_cluster.describe(percentiles=percentileList).transpose().to_csv('out2.csv')

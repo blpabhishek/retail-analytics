@@ -26,9 +26,15 @@ tdf1 = transactionFrame[['household_key', 'PRODUCT_ID', 'SALES_VALUE']]
 pdf = productFrame[['PRODUCT_ID', 'SUB_COMMODITY_DESC']]
 pdf.columns = ['PRODUCT_ID', 'SUB_COMMODITY']
 
-sub_commodity_purchase_behaviour = pd.merge(tdf1, pdf, on='PRODUCT_ID').groupby(['household_key', 'SUB_COMMODITY']).agg(
+sub_commodity_purchase_behaviour = pd.merge(tdf1, pdf, on='PRODUCT_ID', how='left')[
+    ['household_key', 'SUB_COMMODITY', 'SALES_VALUE']].groupby(['household_key', 'SUB_COMMODITY']).agg(
     {"SALES_VALUE": 'sum'}).unstack()
 sub_commodity_purchase_behaviour = sub_commodity_purchase_behaviour.reset_index().fillna(0)
+sub_commodity_purchase_behaviour = sub_commodity_purchase_behaviour.set_index('household_key')
+sub_commodity_purchase_behaviour = sub_commodity_purchase_behaviour['SALES_VALUE']
+sub_commodity_purchase_behaviour.rename(columns=lambda x: "Sub_Commodity_" + x, inplace=True)
+sub_commodity_purchase_behaviour.reset_index(inplace=True)
+
 sub_commodity_purchase_behaviour.head(10)
 
 # df_cluster = sub_commodity_purchase_behaviour['SALES_VALUE']

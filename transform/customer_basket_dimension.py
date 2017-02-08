@@ -13,13 +13,9 @@ transactionFrame = pd.read_csv('transaction_data.csv')
 
 # transactionFrame.columns
 tdf1 = transactionFrame[['household_key', 'BASKET_ID']]
-bucket_behavior = tdf1.groupby(['household_key']).agg({"BASKET_ID": 'count'}).reset_index()
-bucket_behavior.columns = ['household_key', 'Basket Count']
-bucket_behavior.head(10)
-customer_bucket_behavior = pd.merge(bucket_behavior, customerFrame, on='household_key', how='left').fillna(0)
-customer_bucket_behavior.head(10)
-
-customer_bucket_behavior.to_csv("bucket.csv")
+basket_behavior = tdf1.groupby(['household_key']).agg({"BASKET_ID": 'count'}).reset_index()
+basket_behavior.columns = ['household_key', 'Basket Count']
+basket_behavior.head(10)
 
 # cluster_fatures = ['Sale Value','Discount Percentage']
 # df_cluster = customer_discount_behaviour[cluster_fatures]
