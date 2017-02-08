@@ -1,14 +1,14 @@
 import os
 
 import pandas as pd
-retval = os.getcwd()
+
 path = os.environ['data_path']
-os.chdir( path )
-retval = os.getcwd()
-# read data for product, customer and transaction
+os.chdir(path + "/source")
+
 productFrame = pd.read_csv('product.csv')
 customerFrame = pd.read_csv('hh_demographic.csv')
 transactionFrame = pd.read_csv('transaction_data.csv')
+os.chdir(path)
 
 tdf1 = transactionFrame[['household_key', 'PRODUCT_ID', 'SALES_VALUE']]
 tdf1.columns = ['household_key', 'PRODUCT Count', 'Sales']
@@ -37,7 +37,5 @@ brand_purchase_behaviour = brand_purchase_behaviour[['household_key', 'National 
 
 brand_purchase_behaviour.head()
 
-customer_brand_purchase_behaviour = pd.merge(customerFrame, brand_purchase_behaviour, on='household_key')
-customer_brand_purchase_behaviour.to_csv('customer_brand_spend_behaviour.csv')
 
 

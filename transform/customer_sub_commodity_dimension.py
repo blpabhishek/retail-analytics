@@ -2,14 +2,13 @@ import os
 
 import pandas as pd
 
-retval = os.getcwd()
 path = os.environ['data_path']
-os.chdir(path)
-retval = os.getcwd()
+os.chdir(path + "/source")
 
 productFrame = pd.read_csv('product.csv')
 customerFrame = pd.read_csv('hh_demographic.csv')
 transactionFrame = pd.read_csv('transaction_data.csv')
+os.chdir(path)
 
 invalidProducts = [5126106, 5993055, 5978657, 5126087, 5993051, 5978650, 5978659, 6693056, 5993054, 5126088, 5126107,
                    5978649, 5977100, 5978656, 5978648]

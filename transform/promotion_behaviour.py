@@ -1,21 +1,19 @@
-# -*- coding: utf-8 -*-
-# changing directory to current
 import os
-
-path = os.environ['data_path']
-os.chdir(path)
 
 import pandas as pd
 
-productFrame = pd.read_csv('product.csv')
-customerFrame = pd.read_csv('hh_demographic.csv')
-transactionFrame = pd.read_csv('transaction_data.csv')
+path = os.environ['data_path']
+os.chdir(path + "/source")
 
+# productFrame = pd.read_csv('product.csv')
+# customerFrame = pd.read_csv('hh_demographic.csv')
+transactionFrame = pd.read_csv('transaction_data.csv')
 campaign_desc = pd.read_csv('campaign_desc.csv')
 campaign_table = pd.read_csv('campaign_table.csv')
-
 coupon_redempt_table = pd.read_csv('coupon_redempt.csv')
-coupon_table = pd.read_csv('coupon.csv')
+# coupon_table = pd.read_csv('coupon.csv')
+
+os.chdir(path)
 
 campaign_details = pd.merge(campaign_table, campaign_desc)
 campaign_details.head()
@@ -32,8 +30,6 @@ grouped_by_campaign.head()
 
 redeemed_coupons_count = coupon_redempt_table.groupby(['household_key']).agg({'COUPON_UPC': 'count'}).reset_index()
 redeemed_coupons_count.head()
-
-coupon_redempt_table = pd.read_csv('coupon_redempt.csv')
 
 redemption_by_campaign_type = coupon_redempt_table.merge(campaign_details, how="left").groupby(
     ['household_key', 'DESCRIPTION']).agg({'CAMPAIGN': 'count'}).reset_index()

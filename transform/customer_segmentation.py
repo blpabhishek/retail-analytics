@@ -1,13 +1,17 @@
-# -*- coding: utf-8 -*-
-# changing directory to current
 import os
 
-from transform.promotion_behaviour import promotion_behavior_of_all
+import pandas as pd
 
 path = os.environ['data_path']
+os.chdir(path + "/source")
+
+productFrame = pd.read_csv('product.csv')
+customerFrame = pd.read_csv('hh_demographic.csv')
+transactionFrame = pd.read_csv('transaction_data.csv')
 os.chdir(path)
 
 from customer_commodity_dimension import *
+from transform.promotion_behaviour import promotion_behavior_of_all
 from customer_department_dimension import *
 from customer_brand_dimension import *
 from transform.customer_sub_commodity_dimension import sub_commodity_purchase_behaviour

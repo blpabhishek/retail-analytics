@@ -1,14 +1,14 @@
-# -*- coding: utf-8 -*-
-# changing directory to current
 import os
 
-path = os.environ['data_path']
-os.chdir(path)
 import pandas as pd
+
+path = os.environ['data_path']
+os.chdir(path + "/source")
 
 productFrame = pd.read_csv('product.csv')
 customerFrame = pd.read_csv('hh_demographic.csv')
 transactionFrame = pd.read_csv('transaction_data.csv')
+os.chdir(path)
 
 invalidProducts = [5126106, 5993055, 5978657, 5126087, 5993051, 5978650, 5978659, 6693056, 5993054, 5126088, 5126107,
                    5978649, 5977100, 5978656, 5978648]
@@ -51,6 +51,4 @@ commodity_purchase_behaviour.rename(columns={'(CORP USE ONLY)': 'CORP USE ONLY'}
 commodity_purchase_behaviour.rename(columns=lambda x: "Commodity_" + x, inplace=True)
 commodity_purchase_behaviour.reset_index(inplace=True)
 
-print commodity_purchase_behaviour.head()
-# percentileList = [.01, .02, .03, .05, .10, .20, .25, .30, .40, .50, .60, .70, .75, .80, .90, .95, .97, .98, .99]
-# df_cluster.describe(percentiles=percentileList).transpose().to_csv('out2.csv')
+

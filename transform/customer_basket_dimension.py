@@ -1,15 +1,15 @@
 import os
 
-retval = os.getcwd()
-path = os.environ['data_path']
-os.chdir(path)
-retval = os.getcwd()
-
 import pandas as pd
+
+path = os.environ['data_path']
+os.chdir(path + "/source")
 
 productFrame = pd.read_csv('product.csv')
 customerFrame = pd.read_csv('hh_demographic.csv')
 transactionFrame = pd.read_csv('transaction_data.csv')
+os.chdir(path)
+
 
 # transactionFrame.columns
 tdf1 = transactionFrame[['household_key', 'BASKET_ID']]

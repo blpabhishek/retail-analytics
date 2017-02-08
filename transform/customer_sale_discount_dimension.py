@@ -2,14 +2,13 @@ import os
 
 import pandas as pd
 
-retval = os.getcwd()
 path = os.environ['data_path']
-os.chdir(path)
-retval = os.getcwd()
+os.chdir(path + "/source")
 
 productFrame = pd.read_csv('product.csv')
 customerFrame = pd.read_csv('hh_demographic.csv')
 transactionFrame = pd.read_csv('transaction_data.csv')
+os.chdir(path)
 
 tdf1 = transactionFrame[['household_key', 'PRODUCT_ID', 'SALES_VALUE', 'RETAIL_DISC', 'COUPON_MATCH_DISC']]
 
@@ -21,10 +20,6 @@ discount_behaviour['PERCENT_DISC'] = abs(discount_behaviour['TOTAL_DISC'] / disc
 discount_behaviour.columns = ['household_key', 'Retail Discount', 'Sale Value', 'Coupon Discount', 'Total Discount',
                               'Discount Percentage']
 
-customer_discount_behaviour = pd.merge(discount_behaviour, customerFrame, on='household_key', how='left').fillna(0)
-customer_discount_behaviour.head(10)
-
-customer_discount_behaviour.to_csv("discount.csv")
 
 # cluster_fatures = ['Sale Value','Discount Percentage']
 # df_cluster = customer_discount_behaviour[cluster_fatures]
