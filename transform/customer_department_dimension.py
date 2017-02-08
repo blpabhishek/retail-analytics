@@ -28,15 +28,18 @@ invalidDepartment = ['CHARITABLE CONT', 'CNTRL/STORE SUP', 'DELI/SNACK BAR', 'EL
 productFrame = productFrame[-productFrame['PRODUCT_ID'].isin(invalidProducts)]
 productFrame = productFrame[-productFrame['DEPARTMENT'].isin(invalidDepartment)]
 
-tdf1 = transactionFrame[['household_key', 'PRODUCT_ID', 'SALES_VALUE', 'QUANTITY']]
+tdf1 = transactionFrame[['household_key', 'PRODUCT_ID', 'SALES_VALUE']]
 pdf = productFrame[['PRODUCT_ID', 'DEPARTMENT']]
 
-department_purchase_behaviour = pd.merge(tdf1, pdf, on='PRODUCT_ID', how='left').groupby(
-    ['household_key', 'DEPARTMENT']).agg({"SALES_VALUE": 'sum', "QUANTITY": 'sum'}).unstack()
+department_purchase_behaviour = pd.merge(tdf1, pdf, on='PRODUCT_ID', how='left')[
+    ['household_key', 'DEPARTMENT', 'SALES_VALUE']].groupby(['household_key', 'DEPARTMENT']).sum().unstack()
 department_purchase_behaviour = department_purchase_behaviour.reset_index().fillna(0)
-department_purchase_behaviour = department_purchase_behaviour[['SALES_VALUE', 'QUANTITY', 'household_key']]
 department_purchase_behaviour['SALES_VALUE', 'Total Sale'] = department_purchase_behaviour['SALES_VALUE'].sum(axis=1)
-department_purchase_behaviour = department_purchase_behaviour[['household_key', 'SALES_VALUE', 'QUANTITY']]
+department_purchase_behaviour.set_index('household_key', inplace=True)
+department_purchase_behaviour = department_purchase_behaviour['SALES_VALUE']
+department_purchase_behaviour.rename(columns=lambda x: "Department_" + x, inplace=True)
+department_purchase_behaviour.reset_index(inplace=True)
+
 department_purchase_behaviour.head(10)
 
 customer_department_purchase_behaviour = pd.merge(department_purchase_behaviour, customerFrame,
