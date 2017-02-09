@@ -11,7 +11,6 @@ transactionFrame = pd.read_csv('transaction_data.csv')
 os.chdir(path)
 
 
-
 tdf1 = transactionFrame[['household_key', 'DAY']]
 tdf1['Day_Diff'] = tdf1.groupby('household_key')['DAY'].transform(pd.Series.diff).fillna(0)
 tdf1.sort_index(inplace=True)

@@ -25,7 +25,6 @@ invalidDepartment = ['CHARITABLE CONT', 'CNTRL/STORE SUP', 'DELI/SNACK BAR', 'EL
 productFrame = productFrame[-productFrame['PRODUCT_ID'].isin(invalidProducts)]
 productFrame = productFrame[-productFrame['DEPARTMENT'].isin(invalidDepartment)]
 
-
 tdf1 = transactionFrame[['household_key', 'PRODUCT_ID', 'SALES_VALUE']]
 pdf = productFrame[['PRODUCT_ID', 'DEPARTMENT']]
 
@@ -36,9 +35,10 @@ department_purchase_behaviour['SALES_VALUE', 'Total Sale'] = department_purchase
 department_purchase_behaviour.set_index('household_key', inplace=True)
 department_purchase_behaviour = department_purchase_behaviour['SALES_VALUE']
 department_purchase_behaviour.rename(columns=lambda x: "Department_" + x, inplace=True)
-department_purchase_behaviour = department_purchase_behaviour.div(department_purchase_behaviour['Department_Total Sale'],axis=0)
+department_purchase_behaviour = department_purchase_behaviour.div(
+    department_purchase_behaviour['Department_Total Sale'], axis=0)
 department_purchase_behaviour.reset_index(inplace=True)
-department_purchase_behaviour.drop('Department_Total Sale',axis=1,inplace=True)
+department_purchase_behaviour.drop('Department_Total Sale', axis=1, inplace=True)
 
 department_purchase_behaviour.head(10)
 
