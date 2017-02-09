@@ -26,11 +26,11 @@ commodity_department_brand_purchase_behaviour = pd.merge(department_brand_purcha
                                                          commodity_purchase_behaviour, on='household_key',
                                                          how='outer').fillna(0)
 
-sub_commodity_department_brand_purchase_behaviour = pd.merge(commodity_department_brand_purchase_behaviour,
-                                                             sub_commodity_purchase_behaviour, on='household_key',
-                                                             how='outer').fillna(0)
+# sub_commodity_department_brand_purchase_behaviour = pd.merge(commodity_department_brand_purchase_behaviour,
+#                                                              sub_commodity_purchase_behaviour, on='household_key',
+#                                                              how='outer').fillna(0)
 
-discount_sub_commodity_department_brand_purchase_behaviour = pd.merge(sub_commodity_department_brand_purchase_behaviour,
+discount_sub_commodity_department_brand_purchase_behaviour = pd.merge(commodity_department_brand_purchase_behaviour,
                                                                       discount_behaviour, on='household_key',
                                                                       how='outer').fillna(0)
 
