@@ -33,7 +33,7 @@ tdf1 = transactionFrame[['household_key', 'PRODUCT_ID', 'SALES_VALUE']]
 pdf = productFrame[['PRODUCT_ID', 'COMMODITY_DESC', 'DEPARTMENT']]
 pdf.columns = ['PRODUCT_ID', 'COMMODITY', 'DEPARTMENT']
 
-commodity_purchase_behaviour = pd.merge(tdf1, pdf, on='PRODUCT_ID', how='left')[
+commodity_purchase_behaviour = pd.merge(tdf1, pdf, on='PRODUCT_ID')[
     ['household_key', 'DEPARTMENT', 'COMMODITY', 'SALES_VALUE']].groupby(
     ['household_key', 'DEPARTMENT', 'COMMODITY']).agg(
     {"SALES_VALUE": 'sum'}).unstack()
@@ -49,6 +49,7 @@ commodity_purchase_behaviour.rename(columns=lambda x: "Commodity_" + x, inplace=
 commodity_purchase_behaviour.reset_index(inplace=True)
 commodity_purchase_behaviour.drop('DEPARTMENT', axis=1, inplace=True)
 
-commodity_purchase_behaviour.head(10)
+commodity_purchase_behaviour = commodity_purchase_behaviour.groupby('household_key').sum().reset_index()
+print commodity_purchase_behaviour.shape
 
 # print commodity_purchase_behaviour.head(10)
