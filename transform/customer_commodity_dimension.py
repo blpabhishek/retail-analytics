@@ -18,10 +18,17 @@ invalidDepartment = ['CHARITABLE CONT', 'CNTRL/STORE SUP', 'DELI/SNACK BAR', 'EL
                      'SALES', 'RX', 'TOYS', 'VIDEO', 'VIDEO RENTAL', 'AUTOMOTIVE', 'DAIRY DELI', 'GM MERCH EXP',
                      'PROD-WHS SALES']
 
-validDepartment = ['DRUG GM', 'GROCERY', 'KIOSK-GAS', 'MEAT', 'MEAT-PCKGD', 'PRODUCE']
+validDepartment = ['DRUG GM', 'KIOSK-GAS', 'MEAT', 'MEAT-PCKGD', 'PRODUCE']
+validGroceryCommodity = ['BEERS/ALES', 'CHEESE', 'FLUID MILK PRODUCTS', 'FROZEN PIZZA', 'FRZN MEAT/MEAT DINNERS',
+                         'SOFT DRINKS']
+
+validDepartmentExpr = productFrame['DEPARTMENT'].isin(validDepartment)
+groceryCheckExpr = productFrame['DEPARTMENT'] == 'GROCERY'
+groceryCommodityExpr = productFrame['COMMODITY_DESC'].isin(validGroceryCommodity)
+expr = (groceryCheckExpr & groceryCommodityExpr) | validDepartmentExpr
 
 productFrame = productFrame[-productFrame['PRODUCT_ID'].isin(invalidProducts)]
-productFrame = productFrame[productFrame['DEPARTMENT'].isin(validDepartment)]
+productFrame = productFrame[expr]
 
 tdf1 = transactionFrame[['household_key', 'PRODUCT_ID', 'SALES_VALUE']]
 pdf = productFrame[['PRODUCT_ID', 'COMMODITY_DESC', 'DEPARTMENT']]
@@ -45,4 +52,4 @@ commodity_purchase_behaviour.drop('DEPARTMENT', axis=1, inplace=True)
 
 commodity_purchase_behaviour.head(10)
 
-#print commodity_purchase_behaviour.head(10)
+# print commodity_purchase_behaviour.head(10)
