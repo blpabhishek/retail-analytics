@@ -57,4 +57,4 @@ promotion_behavior_of_redemeed_customer = grouped_by_campaign.merge(redemption_p
 promotion_behavior_of_all = all_unique_customer.merge(promotion_behavior_of_redemeed_customer, on="household_key",
                                                       how="left").fillna('0')
 
-promotion_behavior_of_all.head()
+print promotion_behavior_of_all.shape

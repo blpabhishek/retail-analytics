@@ -20,27 +20,25 @@ from transform.customer_basket_dimension import basket_behavior
 from transform.customer_basket_gap_dimension import basket_gap_behaviour
 
 department_brand_purchase_behaviour = pd.merge(department_purchase_behaviour, brand_purchase_behaviour,
-                                               on='household_key', how='outer').fillna(0)
+                                               on='household_key').fillna(0)
 
 commodity_department_brand_purchase_behaviour = pd.merge(department_brand_purchase_behaviour,
-                                                         commodity_purchase_behaviour, on='household_key',
-                                                         how='outer').fillna(0)
+                                                         commodity_purchase_behaviour, on='household_key').fillna(0)
 
 # sub_commodity_department_brand_purchase_behaviour = pd.merge(commodity_department_brand_purchase_behaviour,
 #                                                              sub_commodity_purchase_behaviour, on='household_key',
 #                                                              how='outer').fillna(0)
 
 discount_sub_commodity_department_brand_purchase_behaviour = pd.merge(commodity_department_brand_purchase_behaviour,
-                                                                      discount_behaviour, on='household_key',
-                                                                      how='outer').fillna(0)
+                                                                      discount_behaviour, on='household_key').fillna(0)
 
 basket_discount_sub_commodity_department_brand_purchase_behaviour = pd.merge(
-    discount_sub_commodity_department_brand_purchase_behaviour, basket_behavior, on='household_key',
-    how='outer').fillna(0)
+    discount_sub_commodity_department_brand_purchase_behaviour, basket_behavior, on='household_key'
+).fillna(0)
 
 gap_basket_discount_sub_commodity_department_brand_purchase_behaviour = pd.merge(
-    basket_discount_sub_commodity_department_brand_purchase_behaviour, basket_gap_behaviour, on='household_key',
-    how='outer').fillna(0)
+    basket_discount_sub_commodity_department_brand_purchase_behaviour, basket_gap_behaviour, on='household_key'
+).fillna(0)
 
 promotion_gap_basket_discount_sub_commodity_department_brand_purchase_behaviour = pd.merge(
     gap_basket_discount_sub_commodity_department_brand_purchase_behaviour, promotion_behavior_of_all,

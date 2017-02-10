@@ -2,6 +2,8 @@ import os
 
 import pandas as pd
 
+from transform.utils import validCommodity
+
 path = os.environ['data_path']
 os.chdir(path + "/source")
 
@@ -22,9 +24,14 @@ invalidDepartment = ['CHARITABLE CONT', 'CNTRL/STORE SUP', 'DELI/SNACK BAR', 'EL
                      'SALES', 'RX', 'TOYS', 'VIDEO', 'VIDEO RENTAL', 'AUTOMOTIVE', 'DAIRY DELI', 'GM MERCH EXP',
                      'PROD-WHS SALES']
 
-productFrame = productFrame[-productFrame['PRODUCT_ID'].isin(invalidProducts)]
-productFrame = productFrame[-productFrame['DEPARTMENT'].isin(invalidDepartment)]
+validDepartment = ['PRODUCE', 'KIOSK-GAS', 'MEAT', 'MEAT-PCKGD', 'PRODUCE']
 
+validDepartmentExpr = productFrame['DEPARTMENT'].isin(validDepartment)
+validCommodityExpr = productFrame['COMMODITY_DESC'].isin(validCommodity)
+expr = validDepartmentExpr & validCommodityExpr
+
+productFrame = productFrame[-productFrame['PRODUCT_ID'].isin(invalidProducts)]
+productFrame = productFrame[expr]
 tdf1 = transactionFrame[['household_key', 'PRODUCT_ID', 'SALES_VALUE']]
 pdf = productFrame[['PRODUCT_ID', 'DEPARTMENT']]
 

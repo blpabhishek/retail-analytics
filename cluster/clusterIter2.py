@@ -20,8 +20,8 @@ pd.DataFrame(list(Cust_behavior)).to_csv('varnames.csv')
 Commodity_vars = [c for c in Cust_behavior.columns if "Commodity" in c]
 
 drop_vars = [
-    'Department_MISC SALES TRAN',
-    'Department_MISC. TRANS.',
+    # 'Department_MISC SALES TRAN',
+    # 'Department_MISC. TRANS.',
     # 'Department_Total Sale',
     'National Count',
     'National Count %',
@@ -89,7 +89,7 @@ for k in range(2, 11):
     print("k={}, The Silhouette Coefficient is {}".format(k, sil_coeff))
 
 ### Number of clusters
-k = 12
+k = 7
 kmeans = cluster.KMeans(n_clusters=k)
 kmeans.fit(df_clus_with_components)  ##3 fitting cluster
 

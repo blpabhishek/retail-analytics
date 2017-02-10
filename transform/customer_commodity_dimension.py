@@ -2,6 +2,8 @@ import os
 
 import pandas as pd
 
+from transform.utils import validCommodity
+
 path = os.environ['data_path']
 os.chdir(path + "/source")
 
@@ -18,17 +20,14 @@ invalidDepartment = ['CHARITABLE CONT', 'CNTRL/STORE SUP', 'DELI/SNACK BAR', 'EL
                      'SALES', 'RX', 'TOYS', 'VIDEO', 'VIDEO RENTAL', 'AUTOMOTIVE', 'DAIRY DELI', 'GM MERCH EXP',
                      'PROD-WHS SALES']
 
-validDepartment = ['DRUG GM', 'KIOSK-GAS', 'MEAT', 'MEAT-PCKGD', 'PRODUCE']
-validGroceryCommodity = ['BEERS/ALES', 'CHEESE', 'FLUID MILK PRODUCTS', 'FROZEN PIZZA', 'FRZN MEAT/MEAT DINNERS',
-                         'SOFT DRINKS']
-
-validDepartmentExpr = productFrame['DEPARTMENT'].isin(validDepartment)
-groceryCheckExpr = productFrame['DEPARTMENT'] == 'GROCERY'
-groceryCommodityExpr = productFrame['COMMODITY_DESC'].isin(validGroceryCommodity)
-expr = (groceryCheckExpr & groceryCommodityExpr) | validDepartmentExpr
+validDepartment = ['DRUG GM', 'GROCERY', 'KIOSK-GAS', 'MEAT', 'MEAT-PCKGD', 'PRODUCE']
+# validDepartment = ['PRODUCE']
 
 productFrame = productFrame[-productFrame['PRODUCT_ID'].isin(invalidProducts)]
-productFrame = productFrame[expr]
+
+validDepartmentExpr = productFrame['DEPARTMENT'].isin(validDepartment)
+validCommodityExpr = productFrame['COMMODITY_DESC'].isin(validCommodity)
+expr = validDepartmentExpr & validCommodityExpr
 
 tdf1 = transactionFrame[['household_key', 'PRODUCT_ID', 'SALES_VALUE']]
 pdf = productFrame[['PRODUCT_ID', 'COMMODITY_DESC', 'DEPARTMENT']]
