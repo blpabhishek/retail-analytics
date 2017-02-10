@@ -24,10 +24,7 @@ validDepartment = ['DRUG GM', 'GROCERY', 'KIOSK-GAS', 'MEAT', 'MEAT-PCKGD', 'PRO
 # validDepartment = ['PRODUCE']
 
 productFrame = productFrame[-productFrame['PRODUCT_ID'].isin(invalidProducts)]
-
-validDepartmentExpr = productFrame['DEPARTMENT'].isin(validDepartment)
-validCommodityExpr = productFrame['COMMODITY_DESC'].isin(validCommodity)
-expr = validDepartmentExpr & validCommodityExpr
+productFrame = productFrame[productFrame['COMMODITY_DESC'].isin(validCommodity)]
 
 tdf1 = transactionFrame[['household_key', 'PRODUCT_ID', 'SALES_VALUE']]
 pdf = productFrame[['PRODUCT_ID', 'COMMODITY_DESC', 'DEPARTMENT']]
