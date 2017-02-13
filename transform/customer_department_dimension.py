@@ -22,10 +22,10 @@ invalidDepartment = ['CHARITABLE CONT', 'CNTRL/STORE SUP', 'DELI/SNACK BAR', 'EL
                      'SALES', 'RX', 'TOYS', 'VIDEO', 'VIDEO RENTAL', 'AUTOMOTIVE', 'DAIRY DELI', 'GM MERCH EXP',
                      'PROD-WHS SALES']
 
-validDepartment = ['PRODUCE', 'GROCERY' 'KIOSK-GAS', 'MEAT', 'MEAT-PCKGD', 'PRODUCE']
+validDepartment = ['PRODUCE', 'GROCERY', 'KIOSK-GAS', 'MEAT', 'MEAT-PCKGD', 'PRODUCE']
 
 productFrame = productFrame[-productFrame['PRODUCT_ID'].isin(invalidProducts)]
-#productFrame = productFrame[productFrame['DEPARTMENT'].isin(validDepartment)]
+productFrame = productFrame[productFrame['DEPARTMENT'].isin(validDepartment)]
 tdf1 = transactionFrame[['household_key', 'PRODUCT_ID', 'SALES_VALUE']]
 pdf = productFrame[['PRODUCT_ID', 'DEPARTMENT']]
 

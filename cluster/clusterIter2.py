@@ -17,12 +17,9 @@ pd.DataFrame(list(Cust_behavior)).to_csv('varnames.csv')
 ###### Prepare the data . Remove unnecessary variables ***********
 
 ### capturing all commodity and sub commodity vars
-Commodity_vars = [c for c in Cust_behavior.columns if "Commodity" in c]
-
+# Commodity_vars = [c for c in Cust_behavior.columns if "Commodity" in c]
+# Department = [d for d in Cust_behavior.columns if "Department" in d]
 drop_vars = [
-    # 'Department_MISC SALES TRAN',
-    # 'Department_MISC. TRANS.',
-    # 'Department_Total Sale',
     'National Count',
     'National Count %',
     'Private Count',

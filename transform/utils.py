@@ -35,59 +35,23 @@ def household_size_conversion(hh_size):
 
 # Creating a new income variable for each customer which is equal to the mean of the income bucket the customer falls in
 
-validGroceryCommodity = ['BEERS/ALES', 'CHEESE', 'FLUID MILK PRODUCTS', 'FROZEN PIZZA', 'FRZN MEAT/MEAT DINNERS',
-                         'SOFT DRINKS']
-validDrugCommodity = ['ANALGESICS',
-                      'BABY FOODS',
-                      'CANDY - CHECKLANE',
-                      'CANDY - PACKAGED',
-                      'CIGARETTES',
-                      'COLD AND FLU',
-                      'DIAPERS & DISPOSABLES',
-                      'GREETING CARDS/WRAP/PARTY SPLY',
-                      'HAIR CARE PRODUCTS',
-                      'INFANT FORMULA',
-                      'ORAL HYGIENE PRODUCTS',
-                      'PREPAID WIRELESS&ACCESSORIES',
-                      'SHAVING CARE PRODUCTS',
-                      'VITAMINS']
-
-validMeatCommodity = ['BEEF',
-                      'CHICKEN',
-                      'PORK',
-                      'SMOKED MEATS',
-                      'TURKEY']
-
-validGasCommodity = ['COUPON/MISC ITEMS'
-                     'FUEL']
-
-validMeatPackagedDepartment = ['BREAKFAST SAUSAGE/SANDWICHES',
-                               'DINNER SAUSAGE',
-                               'FROZEN MEAT',
-                               'HEAT/SERVE',
-                               'HOT DOGS',
-                               'LUNCHMEAT',
-                               'MEAT - MISC'
-                               ]
-
-validProduceCommodity = ['APPLES',
-                         'BERRIES',
-                         'CITRUS',
-                         'CORN',
-                         'GRAPES',
-                         'MELONS',
-                         'ONIONS',
-                         'POTATOES',
-                         'SALAD MIX',
-                         'TOMATOES',
-                         'TROPICAL FRUIT',
-                         'VALUE ADDED FRUIT',
-                         'VALUE ADDED VEGETABLES',
-                         'VEGETABLES - ALL OTHERS']
-
-validCommodity = validGroceryCommodity + validDrugCommodity + validMeatCommodity + validMeatPackagedDepartment + \
-                 validGasCommodity + validProduceCommodity
-
+validCommodity = ['SOFT DRINKS',
+                  'BEEF',
+                  'FLUID MILK PRODUCTS',
+                  'CHEESE',
+                  'FRZN MEAT/MEAT DINNERS',
+                  'BAG SNACKS',
+                  'BEERS/ALES',
+                  'FROZEN PIZZA',
+                  'BAKED BREAD/BUNS/ROLLS',
+                  'COLD CEREAL',
+                  'CIGARETTES',
+                  'CHICKEN',
+                  'LUNCHMEAT',
+                  'PORK',
+                  'SOUP',
+                  'ICE CREAM/MILK/SHERBTS'
+                  ]
 
 # doing feature scaling by subtracting mean of (7500, 19500, 29500, 42000, 62000, 87000, 112000, 137000, 164000, 187000, 224500) i,e., 97454 / std devivation i,e., 73205
 def income_conversion(income):
