@@ -1,6 +1,6 @@
 # Treating categorical variable.Converting to numeric to make them usable
 
-# doing feature scaling by subtracting mean of (21.5,29.5,39.5,49.5,59.5,65) i,e., 44 / std devivation i,e., 17
+# doing feature scaling by subtracting mean of (21.5,29.5,39.5,49.5,59.5,65) i,e., 44 / std deviation i,e., 17
 
 
 def age_conversion(age):
@@ -34,26 +34,8 @@ def household_size_conversion(hh_size):
 
 
 # Creating a new income variable for each customer which is equal to the mean of the income bucket the customer falls in
-
-validCommodity = ['SOFT DRINKS',
-                  'BEEF',
-                  'FLUID MILK PRODUCTS',
-                  'CHEESE',
-                  'FRZN MEAT/MEAT DINNERS',
-                  'BAG SNACKS',
-                  'BEERS/ALES',
-                  'FROZEN PIZZA',
-                  'BAKED BREAD/BUNS/ROLLS',
-                  'COLD CEREAL',
-                  'CIGARETTES',
-                  'CHICKEN',
-                  'LUNCHMEAT',
-                  'PORK',
-                  'SOUP',
-                  'ICE CREAM/MILK/SHERBTS'
-                  ]
-
-# doing feature scaling by subtracting mean of (7500, 19500, 29500, 42000, 62000, 87000, 112000, 137000, 164000, 187000, 224500) i,e., 97454 / std devivation i,e., 73205
+# doing feature scaling by subtracting mean of (7500, 19500, 29500, 42000, 62000, 87000, 112000, 137000, 164000, 187000,
+#  224500) i,e., 97454 / std deviation i,e., 73205
 def income_conversion(income):
     if income == "Under 15K":
         return 7500
@@ -79,4 +61,33 @@ def income_conversion(income):
         return 224500
     if income == "250K+":
         return 250000
-        return 62000  # if income is not in any of these categories, replacing with most frequent category
+    return 62000  # if income is not in any of these categories, replacing with most frequent category
+
+
+popularCommodity = ['SOFT DRINKS',
+                    'BEEF',
+                    'FLUID MILK PRODUCTS',
+                    'CHEESE',
+                    'FRZN MEAT/MEAT DINNERS',
+                    'BAG SNACKS',
+                    'BEERS/ALES',
+                    'FROZEN PIZZA',
+                    'BAKED BREAD/BUNS/ROLLS',
+                    'COLD CEREAL',
+                    'CIGARETTES',
+                    'CHICKEN',
+                    'LUNCHMEAT',
+                    'PORK',
+                    'SOUP',
+                    'ICE CREAM/MILK/SHERBTS'
+                    ]
+
+invalidProducts = [5126106, 5993055, 5978657, 5126087, 5993051, 5978650, 5978659, 6693056, 5993054, 5126088, 5126107,
+                   5978649, 5977100, 5978656, 5978648]
+
+invalidDepartment = ['CHARITABLE CONT', 'CNTRL/STORE SUP', 'DELI/SNACK BAR', 'ELECT &PLUMBING', 'GRO BAKERY', 'HBC',
+                     'HOUSEWARES', 'MEAT-WHSE', 'PHARMACY SUPPLY', 'PHOTO', 'PORK', 'POSTAL CENTER', 'PROD-WHS',
+                     'SALES', 'RX', 'TOYS', 'VIDEO', 'VIDEO RENTAL', 'AUTOMOTIVE', 'DAIRY DELI', 'GM MERCH EXP',
+                     'PROD-WHS SALES']
+
+validDepartment = ['DRUG GM', 'GROCERY', 'KIOSK-GAS', 'MEAT', 'MEAT-PCKGD', 'PRODUCE']

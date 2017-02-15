@@ -20,22 +20,28 @@ brand_purchase_behaviour = pd.merge(tdf1, pdf, on='PRODUCT Count') \
     .agg({"PRODUCT Count": 'count', "Sales": 'sum'}).unstack()
 brand_purchase_behaviour = brand_purchase_behaviour.reset_index()
 brand_purchase_behaviour = brand_purchase_behaviour[['PRODUCT Count', 'Sales', 'household_key']]
-brand_purchase_behaviour['Total Product Count'] = brand_purchase_behaviour['PRODUCT Count', 'National'] + brand_purchase_behaviour['PRODUCT Count', 'Private']
-brand_purchase_behaviour['Total Product Sales'] = brand_purchase_behaviour['Sales', 'National'] + brand_purchase_behaviour['Sales', 'Private']
+brand_purchase_behaviour['Total Product Count'] = brand_purchase_behaviour['PRODUCT Count', 'National'] + \
+                                                  brand_purchase_behaviour['PRODUCT Count', 'Private']
+brand_purchase_behaviour['Total Product Sales'] = brand_purchase_behaviour['Sales', 'National'] + \
+                                                  brand_purchase_behaviour['Sales', 'Private']
 
-brand_purchase_behaviour['PRODUCT Count', 'National %'] = brand_purchase_behaviour['PRODUCT Count', 'National'] / brand_purchase_behaviour['Total Product Count']
-brand_purchase_behaviour['PRODUCT Count', 'Private %'] = brand_purchase_behaviour['PRODUCT Count', 'Private'] / brand_purchase_behaviour['Total Product Count']
-brand_purchase_behaviour['Sales', 'National %'] = brand_purchase_behaviour['Sales', 'National'] / brand_purchase_behaviour['Total Product Sales']
-brand_purchase_behaviour['Sales', 'Private %'] = brand_purchase_behaviour['Sales', 'Private'] / brand_purchase_behaviour['Total Product Sales']
-brand_purchase_behaviour['Average Product Price'] = brand_purchase_behaviour['Total Product Sales'] / brand_purchase_behaviour['Total Product Count']
+brand_purchase_behaviour['PRODUCT Count', 'National %'] = brand_purchase_behaviour['PRODUCT Count', 'National'] / \
+                                                          brand_purchase_behaviour['Total Product Count']
+brand_purchase_behaviour['PRODUCT Count', 'Private %'] = brand_purchase_behaviour['PRODUCT Count', 'Private'] / \
+                                                         brand_purchase_behaviour['Total Product Count']
+brand_purchase_behaviour['Sales', 'National %'] = brand_purchase_behaviour['Sales', 'National'] / \
+                                                  brand_purchase_behaviour['Total Product Sales']
+brand_purchase_behaviour['Sales', 'Private %'] = brand_purchase_behaviour['Sales', 'Private'] / \
+                                                 brand_purchase_behaviour['Total Product Sales']
+brand_purchase_behaviour['Average Product Price'] = brand_purchase_behaviour['Total Product Sales'] / \
+                                                    brand_purchase_behaviour['Total Product Count']
 
-brand_purchase_behaviour.columns = ['National Count', 'Private Count', 'National Sales', 'Private Sales','household_key', 'Total Count', 'Total Sales','National Count %',
-                                    'Private Count %', 'National Sales %', 'Private Sales %','Average Price']
+brand_purchase_behaviour.columns = ['National Count', 'Private Count', 'National Sales', 'Private Sales',
+                                    'household_key', 'Total Count', 'Total Sales', 'National Count %',
+                                    'Private Count %', 'National Sales %', 'Private Sales %', 'Average Price']
 
-brand_purchase_behaviour = brand_purchase_behaviour[['household_key', 'National Count', 'National Count %','Private Count', 'Private Count %', 'Total Count',
-                                                     'National Sales', 'National Sales %', 'Private Sales','Private Sales %', 'Total Sales', 'Average Price']]
+brand_purchase_behaviour = brand_purchase_behaviour[
+    ['household_key', 'National Count', 'National Count %', 'Private Count', 'Private Count %', 'Total Count',
+     'National Sales', 'National Sales %', 'Private Sales', 'Private Sales %', 'Total Sales', 'Average Price']]
 
 brand_purchase_behaviour.head()
-
-
-

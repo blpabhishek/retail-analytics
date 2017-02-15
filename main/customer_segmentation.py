@@ -6,7 +6,7 @@ from transform.customer_brand_dimension import brand_purchase_behaviour
 from transform.customer_commodity_dimension import commodity_purchase_behaviour
 from transform.customer_department_dimension import department_purchase_behaviour
 from transform.customer_sale_discount_dimension import discount_behaviour
-from transform.promotion_behaviour import promotion_behavior_of_all
+from transform.promotion_behaviour import promotion_behavior
 
 department_brand_purchase_behaviour = pd.merge(department_purchase_behaviour, brand_purchase_behaviour,
                                                on='household_key', how="outer").fillna(0)
@@ -29,7 +29,7 @@ gap_basket_discount_department_brand_purchase_behaviour = pd.merge(
 ).fillna(0)
 
 promotion_gap_basket_discount_department_brand_purchase_behaviour = pd.merge(
-    gap_basket_discount_department_brand_purchase_behaviour, promotion_behavior_of_all,
+    gap_basket_discount_department_brand_purchase_behaviour, promotion_behavior,
     on='household_key', how="outer")
 
 customer_segmentation = promotion_gap_basket_discount_department_brand_purchase_behaviour

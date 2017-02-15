@@ -2,6 +2,8 @@ import os
 
 import pandas as pd
 
+from transform.utils import validDepartment, invalidProducts
+
 path = os.environ['data_path']
 os.chdir(path + "/source")
 
@@ -9,20 +11,6 @@ productFrame = pd.read_csv('product.csv')
 customerFrame = pd.read_csv('hh_demographic.csv')
 transactionFrame = pd.read_csv('transaction_data.csv')
 os.chdir(path)
-
-# test2 = pd.merge(tdf1,pdf,on='PRODUCT_ID')
-# test2 = test2[ test2['DEPARTMENT'].str.len() == 1]
-# test2.head(50)
-
-invalidProducts = [5126106, 5993055, 5978657, 5126087, 5993051, 5978650, 5978659, 6693056, 5993054, 5126088, 5126107,
-                   5978649, 5977100, 5978656, 5978648]
-
-invalidDepartment = ['CHARITABLE CONT', 'CNTRL/STORE SUP', 'DELI/SNACK BAR', 'ELECT &PLUMBING', 'GRO BAKERY', 'HBC',
-                     'HOUSEWARES', 'MEAT-WHSE', 'PHARMACY SUPPLY', 'PHOTO', 'PORK', 'POSTAL CENTER', 'PROD-WHS',
-                     'SALES', 'RX', 'TOYS', 'VIDEO', 'VIDEO RENTAL', 'AUTOMOTIVE', 'DAIRY DELI', 'GM MERCH EXP',
-                     'PROD-WHS SALES']
-
-validDepartment = ['DRUG GM', 'GROCERY', 'KIOSK-GAS', 'MEAT', 'MEAT-PCKGD', 'PRODUCE']
 
 productFrame = productFrame[-productFrame['PRODUCT_ID'].isin(invalidProducts)]
 productFrame = productFrame[productFrame['DEPARTMENT'].isin(validDepartment)]

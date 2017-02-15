@@ -5,13 +5,10 @@ import pandas as pd
 path = os.environ['data_path']
 os.chdir(path + "/source")
 
-# productFrame = pd.read_csv('product.csv')
-# customerFrame = pd.read_csv('hh_demographic.csv')
 transactionFrame = pd.read_csv('transaction_data.csv')
 campaign_desc = pd.read_csv('campaign_desc.csv')
 campaign_table = pd.read_csv('campaign_table.csv')
 coupon_redempt_table = pd.read_csv('coupon_redempt.csv')
-# coupon_table = pd.read_csv('coupon.csv')
 
 os.chdir(path)
 
@@ -50,11 +47,11 @@ all_unique_customer.columns = ['Transction count']
 all_unique_customer = all_unique_customer.reset_index()
 all_unique_customer.head()
 
-promotion_behavior_of_redemeed_customer = grouped_by_campaign.merge(redemption_per_customer_per_type,
-                                                                    on="household_key",
-                                                                    suffixes=['_participated', '_redeemed'])
+promotion_behavior_of_customer = grouped_by_campaign.merge(redemption_per_customer_per_type,
+                                                           on="household_key",
+                                                           suffixes=['_participated', '_redeemed'])
 
-promotion_behavior_of_all = all_unique_customer.merge(promotion_behavior_of_redemeed_customer, on="household_key",
-                                                      how="left").fillna('0')
+promotion_behavior = all_unique_customer.merge(promotion_behavior_of_customer, on="household_key",
+                                               how="left").fillna('0')
 
-print promotion_behavior_of_all.shape
+print promotion_behavior.shape
